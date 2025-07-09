@@ -1,0 +1,1076 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>医療・介護施設マップ2025年6月現在</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    #map { height: 100vh; }
+    #control-wrapper { position: absolute; top: 70px; right: 20px; z-index: 1200; }
+
+    .icon-button {
+      width: 40px; height: 40px; background: #007bff; color: white;
+      border-radius: 50%; text-align: center; line-height: 40px;
+      font-size: 24px; font-weight: bold; cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3); user-select: none;
+    }
+    #controls {
+      display: none; width: 160px; padding: 5px; background: white;
+      border: 1px solid #ccc; border-radius: 4px; font-size: 12px;
+      margin-top: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); max-height: 60vh; overflow-y: auto;
+    }
+    #control-wrapper:hover #controls { display: block; }
+    #controls button, #controls label {
+      display: block; margin-bottom: 1px; cursor: pointer;
+    }
+    .custom-icon { text-align: center; line-height: 1; }
+    #info-wrapper {
+      position: fixed; top: 95px; left: 10px; z-index: 9999;
+    }
+    #infoPopup {
+      display: none; position: absolute; top: 100%; left: 0;
+      width: 250px; background-color: pink; border: 2px solid gray;
+      padding: 10px; font-size: 10pt; margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="control-wrapper">
+    <div class="icon-button" title="レイヤー表示">🛠️</div>
+    <div id="controls">
+      <button id="selectAllBtn">すべて選択</button>
+      <button id="deselectAllBtn">すべて解除</button>
+
+</style>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界01"> 二次医療圏(海部)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界02"> 〃  (尾張東部)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界03"> 〃  (尾張西部)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界04"> 〃  (尾張北部)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界05"> 〃  (知多半島)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界06"> 〃  (西三河北部)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界07"> 〃  (西三河南部西)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界08"> 〃  (西三河南部東)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界09"> 〃  (東三河北部)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界10"> 〃  (東三河南部)</label>
+      <label><input type="checkbox" class="layer-toggle" value="町丁目境界11"> 〃  (名古屋・尾張中部)</label>
+<label><input type="checkbox" class="layer-toggle" value="病院"> 病院</label>
+<label><input type="checkbox" class="layer-toggle" value="診療所"> 診療所</label>
+<label><input type="checkbox" class="layer-toggle" value="歯科"> 歯科</label>
+<label><input type="checkbox" class="layer-toggle" value="助産院"> 助産院</label>
+<label><input type="checkbox" class="layer-toggle" value="薬局"> 薬局</label>
+<label><input type="checkbox" class="layer-toggle" value="グループホーム"> グループホーム</label>
+<label><input type="checkbox" class="layer-toggle" value="ショートステイ(医療)"> ショートステイ(医療)</label>
+<label><input type="checkbox" class="layer-toggle" value="ショートステイ（介護医療院）"> ショートステイ（介護医療院）</label>
+<label><input type="checkbox" class="layer-toggle" value="ショートステイ(福祉)"> ショートステイ(福祉)</label>
+<label><input type="checkbox" class="layer-toggle" value="ショートステイ(老健)"> ショートステイ(老健)</label>
+<label><input type="checkbox" class="layer-toggle" value="デイケア"> デイケア</label>
+<label><input type="checkbox" class="layer-toggle" value="デイサービス"> デイサービス</label>
+<label><input type="checkbox" class="layer-toggle" value="介護医療院"> 介護医療院</label>
+<label><input type="checkbox" class="layer-toggle" value="居宅介護支援"> 居宅介護支援</label>
+<label><input type="checkbox" class="layer-toggle" value="小規模多機能型"> 小規模多機能型</label>
+<label><input type="checkbox" class="layer-toggle" value="地域特定施設(サービス付き高齢者住宅)"> 地域特定施設(サービス付き高齢者住宅)</label>
+<label><input type="checkbox" class="layer-toggle" value="地域特定施設(軽費老人ホーム)"> 地域特定施設(軽費老人ホーム)</label>
+<label><input type="checkbox" class="layer-toggle" value="地域特定施設(有料老人ホーム)"> 地域特定施設(有料老人ホーム)</label>
+<label><input type="checkbox" class="layer-toggle" value="地域密着デイ"> 地域密着デイ</label>
+<label><input type="checkbox" class="layer-toggle" value="地域老人福祉施設"> 地域老人福祉施設</label>
+<label><input type="checkbox" class="layer-toggle" value="定期巡回・随時対応サービス"> 定期巡回・随時対応サービス</label>
+<label><input type="checkbox" class="layer-toggle" value="特定施設(サービス付き高齢者住宅)"> 特定施設(サービス付き高齢者住宅)</label>
+<label><input type="checkbox" class="layer-toggle" value="特定施設(軽費老人ホーム)"> 特定施設(軽費老人ホーム)</label>
+<label><input type="checkbox" class="layer-toggle" value="特定施設(有料老人ホーム)"> 特定施設(有料老人ホーム)</label>
+<label><input type="checkbox" class="layer-toggle" value="認知症対応デイサービス"> 認知症対応デイサービス</label>
+<label><input type="checkbox" class="layer-toggle" value="福祉用具貸与"> 福祉用具貸与</label>
+<label><input type="checkbox" class="layer-toggle" value="福祉用具販売"> 福祉用具販売</label>
+<label><input type="checkbox" class="layer-toggle" value="複合型サービス"> 複合型サービス</label>
+<label><input type="checkbox" class="layer-toggle" value="訪問リハビリ"> 訪問リハビリ</label>
+<label><input type="checkbox" class="layer-toggle" value="訪問介護"> 訪問介護</label>
+<label><input type="checkbox" class="layer-toggle" value="訪問看護"> 訪問看護</label>
+<label><input type="checkbox" class="layer-toggle" value="訪問入浴"> 訪問入浴</label>
+<label><input type="checkbox" class="layer-toggle" value="夜間対応訪問介護"> 夜間対応訪問介護</label>
+<label><input type="checkbox" class="layer-toggle" value="療養医療施設"> 療養医療施設</label>
+<label><input type="checkbox" class="layer-toggle" value="老人福祉施設"> 老人福祉施設</label>
+<label><input type="checkbox" class="layer-toggle" value="老人保健施設"> 老人保健施設</label>
+
+    </div>
+  </div>
+
+  <div id="info-wrapper" onmouseenter="showInfo()" onmouseleave="hideInfo()">
+    <div style="background-color: white; padding: 5px; border-radius: 8px; display: inline-block; box-shadow: 0 0 2px rgba(0,0,0,0.3);">
+      <span style="font-size: 24px; cursor: pointer;">ℹ️</span>
+    </div>
+    <div id="infoPopup">
+      <span style="color:red;">★</span>病院 🐯診療所 🐼歯科 💊薬局 👩‍🦽介護<br>
+            【出典】<br>医療情報ネット（厚生労働省）<br>介護事業所検索（厚生労働省）<br>                     
+            e-Stat国勢調査2020年<br>Google API<br>
+            【操作】<br>変更、選択 右上ボタン<br>人口表示（境界線表示時）<br>                                 
+            【利用規約】<br>
+            本ツールは以下のサイトで作成しています。<br>
+            https://sites.google.com/view/indexm <br>
+            当該サイトの利用規約をご確認ください。<br>
+            作成者:Mana48FanClub<br> 
+    </div>
+  </div>
+
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    var baseLayers = {
+      "標準地図": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap contributors'
+      }),
+      "航空写真": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles © Esri'
+      }),
+      "トポグラフィック地図": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles © Esri'
+      }),
+      "グレースケール地図": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles © Esri'
+      }),
+      "ストリートマップ": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles © Esri'
+      })
+    };
+    
+    var map = L.map('map', {
+      center: [34.95497319896691, 137.1728808658989],
+      zoom: 15,
+      layers: [baseLayers["標準地図"]],
+      attributionControl: true
+    });
+
+    L.control.layers(baseLayers, null, { position: 'topright', collapsed: true }).addTo(map);
+    var layerGroups = {};
+
+    // 共通処理関数
+    function loadChomeLayer(index) {
+      const filename = `geo_0_町丁目境界${String(index).padStart(2, '0')}.geojson`;
+      const layerName = `町丁目境界${String(index).padStart(2, '0')}`;
+
+      fetch(filename)
+        .then(res => res.json())
+        .then(data => {
+          const chomeLayer = L.geoJSON(data, {
+            style: {
+              color: "red",
+              weight: 1,
+              fillOpacity: 0.03
+            },
+            onEachFeature: function(feature, layer) {
+              const name = feature.properties["町丁目名"] || "不明";
+              const pop = feature.properties["JINKO"] || "不明";
+              layer.bindTooltip(name, { direction: "center", permanent: false });
+              layer.bindPopup(`<strong>${name}</strong><br>人口: ${pop}`);
+            }
+          });
+          layerGroups[layerName] = chomeLayer;
+        });
+    }
+
+    // 一括読み込み
+    for (let i = 1; i <= 11; i++) {
+      loadChomeLayer(i);
+    }
+
+
+    fetch("geo_1_病院.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:red; font-size:30px;">★</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>病院</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["病院"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_2_診療所.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:red; font-size:20px;">🐯</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>診療所</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["診療所"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_3_歯科.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:red; font-size:20px;">🐼</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>歯科</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["歯科"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_4_助産院.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:red; font-size:20px;">🐻</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>助産院</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["助産院"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_5_薬局.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:20px;">💊</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>薬局</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["薬局"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_グループホーム.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>グループホーム</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["グループホーム"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_ショートステイ(医療).geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>ショートステイ(医療)</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["ショートステイ(医療)"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_ショートステイ（介護医療院）.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>ショートステイ（介護医療院）</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["ショートステイ（介護医療院）"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_ショートステイ(福祉).geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>ショートステイ(福祉)</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["ショートステイ(福祉)"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_ショートステイ(老健).geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>ショートステイ(老健)</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["ショートステイ(老健)"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_デイケア.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>デイケア</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["デイケア"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_デイサービス.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>デイサービス</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["デイサービス"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_介護医療院.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>介護医療院</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["介護医療院"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_居宅介護支援.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>居宅介護支援</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["居宅介護支援"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_小規模多機能型.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>小規模多機能型</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["小規模多機能型"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_地域特定施設(サービス付き高齢者住宅).geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>地域特定施設(サービス付き高齢者住宅)</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["地域特定施設(サービス付き高齢者住宅)"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_地域特定施設(軽費老人ホーム).geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>地域特定施設(軽費老人ホーム)</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["地域特定施設(軽費老人ホーム)"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_地域特定施設(有料老人ホーム).geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>地域特定施設(有料老人ホーム)</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["地域特定施設(有料老人ホーム)"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_地域密着デイ.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>地域密着デイ</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["地域密着デイ"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_地域老人福祉施設.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>地域老人福祉施設</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["地域老人福祉施設"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_定期巡回・随時対応サービス.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>定期巡回・随時対応サービス</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["定期巡回・随時対応サービス"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_特定施設(サービス付き高齢者住宅).geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>特定施設(サービス付き高齢者住宅)</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["特定施設(サービス付き高齢者住宅)"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_特定施設(軽費老人ホーム).geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>特定施設(軽費老人ホーム)</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["特定施設(軽費老人ホーム)"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_特定施設(有料老人ホーム).geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>特定施設(有料老人ホーム)</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["特定施設(有料老人ホーム)"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_認知症対応デイサービス.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>認知症対応デイサービス</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["認知症対応デイサービス"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_福祉用具貸与.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>福祉用具貸与</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["福祉用具貸与"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_福祉用具販売.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>福祉用具販売</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["福祉用具販売"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_複合型サービス.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>複合型サービス</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["複合型サービス"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_訪問リハビリ.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>訪問リハビリ</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["訪問リハビリ"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_訪問介護.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>訪問介護</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["訪問介護"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_訪問看護.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>訪問看護</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["訪問看護"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_訪問入浴.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>訪問入浴</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["訪問入浴"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_夜間対応訪問介護.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>夜間対応訪問介護</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["夜間対応訪問介護"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_療養医療施設.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>療養医療施設</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["療養医療施設"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_老人福祉施設.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>老人福祉施設</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["老人福祉施設"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    fetch("geo_老人保健施設.geojson")
+      .then(res => res.json())
+      .then(data => {
+        var layer = L.geoJSON(data, {
+          pointToLayer: function(feature, latlng) {
+            return L.marker(latlng, {
+              icon: L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="color:green; font-size:24px;">👩‍🦽</div>`,
+                iconSize: [32, 32], iconAnchor: [16, 16]
+              })
+            }).bindPopup(
+              `<strong>老人保健施設</strong><br>
+               ${feature.properties["名称"] || "-"}<br>
+               診療科目:${feature.properties["内容2"] || "-"}<br>
+               住所: ${feature.properties["所在地"] || "不明"}<br>
+               サービス提供地域: ${feature.properties["サービス提供地域"] || "-"}<br>
+               <a href="${feature.properties["URL"] || "#"}" target="_blank" rel="noopener noreferrer">詳細ページ</a>`
+            );
+          }
+        });
+        layerGroups["老人保健施設"] = layer;    // ← 初期では map に追加しない layer.addTo(map);
+      });
+    
+    document.querySelectorAll('.layer-toggle').forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        const label = this.value;
+        if (layerGroups[label]) {
+          if (this.checked) {
+            layerGroups[label].addTo(map);
+          } else {
+            map.removeLayer(layerGroups[label]);
+          }
+        }
+      });
+    });
+
+    document.getElementById('selectAllBtn').addEventListener('click', function() {
+      document.querySelectorAll('.layer-toggle').forEach(cb => {
+        cb.checked = true;
+        const label = cb.value;
+        if (layerGroups[label]) layerGroups[label].addTo(map);
+      });
+    });
+
+    document.getElementById('deselectAllBtn').addEventListener('click', function() {
+      document.querySelectorAll('.layer-toggle').forEach(cb => {
+        cb.checked = false;
+        const label = cb.value;
+        if (layerGroups[label]) map.removeLayer(layerGroups[label]);
+      });
+    });
+
+    function showInfo() { document.getElementById('infoPopup').style.display = 'block'; }
+    function hideInfo() { document.getElementById('infoPopup').style.display = 'none'; }
+  </script>
+
+</body>
+</html>

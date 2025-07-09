@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "geo_療養通所",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2390800395-00&ServiceCd=155&Type=search", "名称": "療養通所介護あゝす", "内容2": null, "郵便番号": null, "所在地": "〒467-0873名古屋市瑞穂区竹田町3丁目11番地 サンライズ江副1階", "区分": "療養通所", "緯度": 35.1393092, "経度": 136.9236597, "サービス提供地域": "瑞穂区、昭和区" }, "geometry": { "type": "Point", "coordinates": [ 136.9236597, 35.1393092 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2392300261-00&ServiceCd=155&Type=search", "名称": "ナーシングデイ柊", "内容2": null, "郵便番号": null, "所在地": "〒489-0068愛知県上松山町1-69", "区分": "療養通所", "緯度": 35.2362412, "経度": 137.0832448, "サービス提供地域": "愛知県瀬戸市" }, "geometry": { "type": "Point", "coordinates": [ 137.083244799999989, 35.236241199999988 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2373101837-00&ServiceCd=155&Type=search", "名称": "レスパイトステーション安あん", "内容2": null, "郵便番号": null, "所在地": "〒446-0046愛知県安城市赤松町的場145番地", "区分": "療養通所", "緯度": 34.9343959, "経度": 137.061816, "サービス提供地域": "安城市" }, "geometry": { "type": "Point", "coordinates": [ 137.061816, 34.9343959 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2392000614-00&ServiceCd=155&Type=search", "名称": "メディカルサロンはーとらいふ", "内容2": null, "郵便番号": null, "所在地": "〒441-8112愛知県豊橋市牧野町字北原7番地１", "区分": "療養通所", "緯度": 34.733173, "経度": 137.4058197, "サービス提供地域": "豊橋市" }, "geometry": { "type": "Point", "coordinates": [ 137.4058197, 34.733173 ] } }
+]
+}

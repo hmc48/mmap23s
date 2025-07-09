@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "geo_地域特定施設(サービス付き高齢者住宅)",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2393100165-00&ServiceCd=364&Type=search", "名称": "すえひろ翔裕館", "内容2": null, "郵便番号": null, "所在地": "〒446-0038愛知県安城市末広町9-27", "区分": "地域特定施設(サービス付き高齢者住宅)", "緯度": 34.9563716, "経度": 137.0850133, "サービス提供地域": "－" }, "geometry": { "type": "Point", "coordinates": [ 137.085013300000014, 34.9563716 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2397400116-00&ServiceCd=364&Type=search", "名称": "うらら別邸レジデンス", "内容2": null, "郵便番号": null, "所在地": "〒481-0006愛知県北名古屋市熊之庄江川70番地 うらら別邸", "区分": "地域特定施設(サービス付き高齢者住宅)", "緯度": 35.2510449, "経度": 136.8881658, "サービス提供地域": "－" }, "geometry": { "type": "Point", "coordinates": [ 136.8881658, 35.2510449 ] } }
+]
+}

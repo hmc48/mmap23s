@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "geo_夜間対応訪問介護",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2391300023-00&ServiceCd=710&Type=search", "名称": "あんしんネットワーク", "内容2": null, "郵便番号": null, "所在地": "〒463-0072愛知県名古屋市守山区金屋二丁目388", "区分": "夜間対応訪問介護", "緯度": 35.2041845, "経度": 136.9577288, "サービス提供地域": "名古屋市全域" }, "geometry": { "type": "Point", "coordinates": [ 136.957728800000012, 35.2041845 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2391200116-00&ServiceCd=710&Type=search", "名称": "名古屋夜間介護センター", "内容2": null, "郵便番号": null, "所在地": "〒457-0007愛知県名古屋市南区駈上2-9-16 桑山ビル201", "区分": "夜間対応訪問介護", "緯度": 35.1111456, "経度": 136.9385302, "サービス提供地域": "名古屋市全域" }, "geometry": { "type": "Point", "coordinates": [ 136.9385302, 35.1111456 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2393100280-00&ServiceCd=710&Type=search", "名称": "夜間対応型訪問介護オレンジ", "内容2": null, "郵便番号": null, "所在地": "〒446-0011安城市北山崎町大山９－１", "区分": "夜間対応訪問介護", "緯度": 34.9676691, "経度": 137.1029527, "サービス提供地域": "安城市" }, "geometry": { "type": "Point", "coordinates": [ 137.1029527, 34.9676691 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2390500011-00&ServiceCd=710&Type=search", "名称": "丸八夜間対応型訪問介護事業所", "内容2": null, "郵便番号": null, "所在地": "〒453-0812名古屋市中村区西米野町1-76-6", "区分": "夜間対応訪問介護", "緯度": 35.166327, "経度": 136.871137, "サービス提供地域": "中村区 中川・西区・中区（中村区に接している町）海部郡大治町" }, "geometry": { "type": "Point", "coordinates": [ 136.871137, 35.166327 ] } }
+]
+}

@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "geo_特定施設(サービス付き高齢者住宅)",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2371102852-00&ServiceCd=334&Type=search", "名称": "介護付有料老人ホーム吉祥舘", "内容2": null, "郵便番号": null, "所在地": "〒455-0881船頭場一丁目314番地 介護付有料老人ホーム吉祥舘", "区分": "特定施設(サービス付き高齢者住宅)", "緯度": 35.1182987, "経度": 136.8288456, "サービス提供地域": "－" }, "geometry": { "type": "Point", "coordinates": [ 136.8288456, 35.1182987 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2370602548-00&ServiceCd=334&Type=search", "名称": "サービス付き高齢者向け住宅医療法人生寿会エイム新栄", "内容2": null, "郵便番号": null, "所在地": "〒460-0007愛知県名古屋市中区新栄三丁目7番13号", "区分": "特定施設(サービス付き高齢者住宅)", "緯度": 35.1677894, "経度": 136.9268609, "サービス提供地域": "－" }, "geometry": { "type": "Point", "coordinates": [ 136.9268609, 35.1677894 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2370403764-00&ServiceCd=334&Type=search", "名称": "あいりナーシングホーム", "内容2": null, "郵便番号": null, "所在地": "〒452-0812愛知県名古屋市西区玉池町２１８番", "区分": "特定施設(サービス付き高齢者住宅)", "緯度": 35.2287331, "経度": 136.8874874, "サービス提供地域": "－" }, "geometry": { "type": "Point", "coordinates": [ 136.8874874, 35.2287331 ] } },
+{ "type": "Feature", "properties": { "URL": "https://www.kaigokensaku.mhlw.go.jp/23/index.php?action_kouhyou_detail_023_kani=true&JigyosyoCd=2371005030-00&ServiceCd=334&Type=search", "名称": "シルバーマンション篠原", "内容2": null, "郵便番号": null, "所在地": "〒454-0833愛知県名古屋市中川区上脇町2丁目63番地", "区分": "特定施設(サービス付き高齢者住宅)", "緯度": 35.1357208, "経度": 136.873285, "サービス提供地域": "－" }, "geometry": { "type": "Point", "coordinates": [ 136.873285, 35.1357208 ] } }
+]
+}
